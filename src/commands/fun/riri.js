@@ -22,12 +22,13 @@ module.exports = class RiriCommand extends Command {
             return;
         }
 
-        let randomFile = files[Math.floor(Math.random() * files.length)]; // Picks a random file with Math.random magic.
+        let randomNumber = Math.floor(Math.random() * files.length);
+        let randomFile = files[randomNumber]; // Picks a random file with Math.random magic.
 
         let file = new MessageAttachment()
           .setFile(`./assets/riri/${randomFile}`);
     
-        return message.say(file);
+        return message.say(`Randomly picked image #${randomNumber + 1} out of a total of ${files.length} images.`, file);
     });
   }
 };
