@@ -15,7 +15,7 @@ module.exports = class VipCommand extends Command {
   run(message) {
     let embed = new MessageEmbed()
       .setColor("#0080ff")
-      .setTitle("Kanker")
+      .setTitle("VIP Instructions")
       .setAuthor("Extreme-Network", this.client.user.avatarURL(), "https://extreme-network.net")
       .addField('Step 1', "Type `enw.userid` and hit enter.", true)
       .addField('Step 2', "Copy ID and navigate to your VIP profile (https://www.extreme-network.net/vip/?viewmyprofile=1)", true)
