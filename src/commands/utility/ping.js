@@ -14,7 +14,7 @@ module.exports = class PingCommand extends Command {
   async run(message) {
     const m = await message.say('Ping?');
     m.edit(`Pong! Took ${m.createdTimestamp - message.createdTimestamp}ms. API Latency: ${Math.round(this.client.ws.ping)}ms`);
-    
+
     return;
   }
 };
