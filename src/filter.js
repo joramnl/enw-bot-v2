@@ -2,13 +2,26 @@ const fs = require('fs');
 
 module.exports = class EnwFilter {
 
+  getFilteredGroups() {
+    return [
+      '818801187603480606'
+    ];
+  }
+
     /**
      * Gets a list of userids that are being filtered
      *
      * @returns {Promise<Array>}
      */
-    async getFilteredUsers() {
-        return this.readFile("filtered_users.json");
+    getFilteredUsers() {
+      return new Promise((resolve, reject) => {
+        this.readFile("filtered_users.json")
+          .then(result => resolve(result))
+          .catch(reason => {
+            reject("failed retrieving");
+            console.error("error", reason);
+          });
+      });
     }
 
     /**
@@ -186,7 +199,7 @@ module.exports = class EnwFilter {
 
         this.getFilteredUsers()
             .then(users => {
-                if (users.includes(message.author.id)) {
+                if (users.includes(message.author.id) || this.getFilteredGroups().some(r => message.member._roles.includes(r))) {
                     // Got a filtered user
                     this.getPatterns()
                         .then(patterns => {
@@ -197,7 +210,7 @@ module.exports = class EnwFilter {
                                 console.log(`Removed a message from ${message.author.username}. Message was: '${message.toString()}'`)
 
                                 // Got a filtered word
-                                message.author.send("Your message was deleted.")
+                                message.author.send("Your message was deleted because it contained filtered words.")
                                     .catch((reason => console.log(`Couldn't send a DM to ${message.author.username} because of: '${reason.message}'`)));
                                 message.delete();
                             }
