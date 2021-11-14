@@ -20,14 +20,14 @@ module.exports = class CloseThreadCommand extends Command {
           prompt: 'Time in minutes',
           type: 'integer'
         }
-      ]
+      ],
+      userPermissions: ['MANAGE_CHANNELS'],
     });
   }
 
   async run(message, {channel, time}) {
 
     message.say(`Ok, will close channel in ${time} minutes`);
-    message.say(`Time: ${time * 60 * 1000}`);
 
     setTimeout(function () {
       channel.updateOverwrite(channel.guild.roles.everyone, { SEND_MESSAGES: false });
